@@ -33,7 +33,7 @@ public class FoodService {
 
     public void initSoups(int programmersCount) {
         for (int i = 0; i < programmersCount; i++) {
-            programmerIdToSoupAvailable.put(i, true);
+            programmerIdToSoupAvailable.put(i + 1, true);
         }
     }
 

@@ -47,8 +47,10 @@ public class Simulation {
         for (int i = 0; i < programmersCount; i++) {
             var programmer = new Programmer(i + 1, foodService, queueService);
             programmer.setState(Programmer.State.HUNGRY);
-            programmer.setLeft(forks.get(i));
-            programmer.setRight(forks.get((i + 1) % programmersCount));
+            var left = forks.get(i);
+            var right = forks.get((i + 1) % programmersCount);
+            programmer.setLeft(left.id() < right.id() ? left : right);
+            programmer.setRight(left.id() < right.id() ? right : left);
             executor.submit(programmer);
         }
     }
