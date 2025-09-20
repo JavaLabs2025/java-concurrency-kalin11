@@ -2,8 +2,6 @@ package org.labs.service;
 
 import lombok.Getter;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Getter
@@ -18,7 +16,7 @@ public class QueueService {
         this.queue.add(programmerId);
     }
 
-    public Integer take() {
+    public Integer poll() {
         if (this.queue.isEmpty()) {
             return null;
         }

@@ -29,32 +29,35 @@ public class Programmer implements Runnable {
     @SneakyThrows
     public void run() {
         while (foodService.getEatCount().get() > 0) {
-            try {
-                this.state = State.HUNGRY;
+            this.state = State.HUNGRY;
 
-                if (!foodService.hasSoup(id)) {
-                    System.out.println("Нет супа, программист с id = " + id + " не может поесть. Он будет ждать, когда пополнится порция");
-                    if (!queueService.contains(id)) {
-                        queueService.put(id);
-                    }
-                    Thread.sleep(100);
-                    // сказать, что нет супа и дождаться, пока он появиться, то есть кинуть поток в сон
+            while (!foodService.hasSoup(id)) {
+                if (foodService.getEatCount().get() < 1) {
+                    break;
                 }
 
+                System.out.println("Нет супа, программист с id = " + id + " не может поесть. Он будет ждать, когда пополнится порция");
+                if (!queueService.contains(id)) {
+                    queueService.put(id);
+                }
+                Thread.sleep(100);
+                // сказать, что нет супа и дождаться, пока он появиться, то есть кинуть поток в сон
+            }
+
+            try {
                 left.pickUp(id);
                 right.pickUp(id);
                 this.state = State.EATING;
                 System.out.println("Программист " + id + " начал кушать суп");
-                // если суп все же есть
-                // то взять обе ложки, перейти в статус EATING, уменьшить значение еды, отпустить обе ложки
+                foodService.disableSoup(id);
+                ateSoups.incrementAndGet();
+                // Здесь можно добавить Thread.sleep() для симуляции времени еды, если нужно
             } finally {
                 right.pickDown(id);
                 left.pickDown(id);
                 System.out.println("Программист " + id + " положил вилки");
             }
 
-            foodService.disableSoup(id);
-            ateSoups.incrementAndGet();
             System.out.println("Программист " + id + " начал разговаривать");
             this.state = State.TALKING;
             Thread.sleep(100);
@@ -72,7 +75,6 @@ public class Programmer implements Runnable {
     public enum State {
         TALKING,
         EATING,
-        HUNGRY
-        ;
+        HUNGRY;
     }
 }

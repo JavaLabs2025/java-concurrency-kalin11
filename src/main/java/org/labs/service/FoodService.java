@@ -27,10 +27,6 @@ public class FoodService {
         this.programmerIdToSoupCount.put(programmerId, count);
     }
 
-    public void decreaseAtomicInteger() {
-        eatCount.decrementAndGet();
-    }
-
     public void initSoups(int programmersCount) {
         for (int i = 0; i < programmersCount; i++) {
             programmerIdToSoupAvailable.put(i + 1, true);
@@ -41,15 +37,14 @@ public class FoodService {
         return programmerIdToSoupAvailable.get(programmerId);
     }
 
-    public void addSoupToProgrammer(int programmerId) {
-        programmerIdToSoupAvailable.put(programmerId, true);
-        eatCount.decrementAndGet();
+    public synchronized void addSoupToProgrammer(int programmerId) {
+        if (eatCount.get() > 0) {
+            programmerIdToSoupAvailable.put(programmerId, true);
+            eatCount.decrementAndGet();
+        }
     }
 
     public void disableSoup(int programmerId) {
         programmerIdToSoupAvailable.put(programmerId, false);
     }
-
-
-
 }

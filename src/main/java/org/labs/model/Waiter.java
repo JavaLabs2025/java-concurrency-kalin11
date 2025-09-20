@@ -17,7 +17,7 @@ public class Waiter implements Runnable {
         while (foodService.getEatCount().get() > 0) {
             System.out.println("Официант " + id + ", его очередь = ");
             queueService.print();
-            var programmerId = queueService.take();
+            var programmerId = queueService.poll();
             System.out.println("Официант " + id + " взял программиста с id = " + programmerId);
             if (programmerId != null) {
                 foodService.addSoupToProgrammer(programmerId);
