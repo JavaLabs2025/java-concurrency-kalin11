@@ -23,7 +23,7 @@ public class Waiter implements Runnable {
                 foodService.addSoupToProgrammer(programmerId);
                 System.out.println("Официант " + id + " добавил программисту " + programmerId + " суп");
             }
-            Thread.sleep(1000);
+            Thread.sleep(100);
         }
     }
 }

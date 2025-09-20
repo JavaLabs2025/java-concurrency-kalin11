@@ -37,7 +37,7 @@ public class Programmer implements Runnable {
                     if (!queueService.contains(id)) {
                         queueService.put(id);
                     }
-                    Thread.sleep(500);
+                    Thread.sleep(100);
                     // сказать, что нет супа и дождаться, пока он появиться, то есть кинуть поток в сон
                 }
 
@@ -57,7 +57,7 @@ public class Programmer implements Runnable {
             ateSoups.incrementAndGet();
             System.out.println("Программист " + id + " начал разговаривать");
             this.state = State.TALKING;
-            Thread.sleep(500);
+            Thread.sleep(100);
 
             System.out.println("Осталось еды - " + foodService.getEatCount());
         }

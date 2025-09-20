@@ -23,7 +23,7 @@ public class QueueService {
             return null;
         }
 
-        return queue.peek();
+        return queue.poll();
     }
 
     public boolean contains(Integer programmerId) {
