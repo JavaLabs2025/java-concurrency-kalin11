@@ -22,6 +22,7 @@ public class Programmer implements Runnable {
 
     private final FoodService foodService;
     private final QueueService queueService;
+    private final long timeoutMs;
 
     @Override
     @SneakyThrows
@@ -42,7 +43,7 @@ public class Programmer implements Runnable {
                     queueService.put(id);
                 }
 
-                Thread.sleep(100);
+                Thread.sleep(timeoutMs);
                 // сказать, что нет супа и дождаться, пока он появиться, то есть кинуть поток в сон
             }
 
@@ -68,7 +69,7 @@ public class Programmer implements Runnable {
                 log.info("Программист {} начал разговаривать", id);
 
                 state = State.TALKING;
-                Thread.sleep(100);
+                Thread.sleep(timeoutMs);
             }
         }
         // он должен думать

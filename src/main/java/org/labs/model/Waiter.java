@@ -12,6 +12,7 @@ public class Waiter implements Runnable {
     private final int id;
     private final QueueService queueService;
     private final FoodService foodService;
+    private final long timeoutMs;
 
     @Override
     @SneakyThrows
@@ -27,7 +28,7 @@ public class Waiter implements Runnable {
                     break;
                 }
             }
-            Thread.sleep(100);
+            Thread.sleep(timeoutMs);
         }
     }
 }

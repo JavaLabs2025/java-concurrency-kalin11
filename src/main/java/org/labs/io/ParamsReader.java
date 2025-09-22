@@ -11,8 +11,9 @@ public class ParamsReader {
     public static final String PROGRAMMERS_COUNT = "programmers_count";
     public static final String EAT_COUNT = "eat_count";
     public static final String WAITERS_COUNT = "waiters_count";
+    public static final String TIMEOUT_MS = "timeout_ms";
 
-    private static final Set<String> PARAMS_NAMES = Set.of(PROGRAMMERS_COUNT, EAT_COUNT, WAITERS_COUNT);
+    private static final Set<String> PARAMS_NAMES = Set.of(PROGRAMMERS_COUNT, EAT_COUNT, WAITERS_COUNT, TIMEOUT_MS);
 
     private static final String SEPARATOR = "=";
 

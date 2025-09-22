@@ -14,6 +14,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.locks.ReentrantLock;
 
 import static org.labs.io.ParamsReader.PROGRAMMERS_COUNT;
+import static org.labs.io.ParamsReader.TIMEOUT_MS;
 import static org.labs.io.ParamsReader.WAITERS_COUNT;
 
 @Slf4j
@@ -35,8 +36,8 @@ public class Simulation {
         log.info("Начали симуляцию");
         foodService.initSoups(params.get(PROGRAMMERS_COUNT));
         fillForks(params.get(PROGRAMMERS_COUNT));
-        fillProgrammers(params.get(PROGRAMMERS_COUNT), programmers);
-        createWaiters(params.get(WAITERS_COUNT), waiters);
+        fillProgrammers(params.get(PROGRAMMERS_COUNT), programmers, params.get(TIMEOUT_MS));
+        createWaiters(params.get(WAITERS_COUNT), waiters, params.get(TIMEOUT_MS));
     }
 
     private void fillForks(int forksCount) {
@@ -45,9 +46,9 @@ public class Simulation {
         }
     }
 
-    private void fillProgrammers(int programmersCount, ExecutorService executor) {
+    private void fillProgrammers(int programmersCount, ExecutorService executor, long timeoutMs) {
         for (int i = 0; i < programmersCount; i++) {
-            var programmer = new Programmer(i + 1, foodService, queueService);
+            var programmer = new Programmer(i + 1, foodService, queueService, timeoutMs);
             programmer.setState(Programmer.State.HUNGRY);
             var left = forks.get(i);
             var right = forks.get((i + 1) % programmersCount);
@@ -57,9 +58,9 @@ public class Simulation {
         }
     }
 
-    private void createWaiters(int waitersCount, ExecutorService executor) {
+    private void createWaiters(int waitersCount, ExecutorService executor, long timeoutMs) {
         for (int i = 0; i < waitersCount; i++) {
-            executor.submit(new Waiter(i + 1, queueService, foodService));
+            executor.submit(new Waiter(i + 1, queueService, foodService, timeoutMs));
         }
     }
 }

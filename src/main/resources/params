@@ -1,3 +1,4 @@
 programmers_count=3
-eat_count=10
+eat_count=3000
 waiters_count=7
+timeout_ms=10
