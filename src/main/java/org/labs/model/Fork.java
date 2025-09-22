@@ -1,18 +1,21 @@
 package org.labs.model;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.concurrent.locks.Lock;
 
+@Slf4j
 public record Fork(
     int id,
     Lock lock
 ) {
     public void pickUp(int programmerId) {
         lock.lock();
-        System.out.println("Программист " + programmerId + " взял вилку с id " + id);
+        log.info("Программист {} взял вилку с id {}", programmerId, id);
     }
 
     public void pickDown(int programmerId) {
         lock.unlock();
-        System.out.println("Программист " + programmerId + " положил вилку с id " + id);
+        log.info("Программист {} положил вилку с id {}", programmerId, id);
     }
 }

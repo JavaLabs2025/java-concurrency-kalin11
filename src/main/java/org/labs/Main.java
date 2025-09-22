@@ -1,5 +1,6 @@
 package org.labs;
 
+import lombok.extern.slf4j.Slf4j;
 import org.labs.io.ParamsReader;
 import org.labs.service.FoodService;
 import org.labs.service.QueueService;
@@ -11,6 +12,7 @@ import static org.labs.io.ParamsReader.EAT_COUNT;
 import static org.labs.io.ParamsReader.PROGRAMMERS_COUNT;
 import static org.labs.io.ParamsReader.WAITERS_COUNT;
 
+@Slf4j
 public class Main {
     public static void main(String[] args) {
         var reader = new ParamsReader();
@@ -36,8 +38,8 @@ public class Main {
             Thread.currentThread().interrupt();
         }
 
-        System.out.println("Симуляция завершена. Сколько поел каждый:");
+        log.info("Симуляция завершена. Сколько поел каждый:");
         foodService.getProgrammerIdToSoupCount().forEach((id, count) ->
-                System.out.println("Программист " + id + " поел " + count + " раз"));
+                log.info("Программист {} поел {} раз", id, count));
     }
 }

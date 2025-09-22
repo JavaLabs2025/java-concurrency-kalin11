@@ -6,11 +6,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Getter
 public class QueueService {
-    private final ConcurrentLinkedQueue<Integer> queue;
-
-    public QueueService() {
-        this.queue = new ConcurrentLinkedQueue<>();
-    }
+    private final ConcurrentLinkedQueue<Integer> queue = new ConcurrentLinkedQueue<>();
 
     public void put(Integer programmerId) {
         this.queue.add(programmerId);
@@ -28,11 +24,7 @@ public class QueueService {
         return this.queue.contains(programmerId);
     }
 
-    public void remove() {
-        this.queue.remove();
-    }
-
-    public void print() {
-        System.out.println(queue);
+    public String print() {
+        return this.queue.toString();
     }
 }

@@ -1,5 +1,6 @@
 package org.labs;
 
+import lombok.extern.slf4j.Slf4j;
 import org.labs.model.Fork;
 import org.labs.model.Programmer;
 import org.labs.model.Waiter;
@@ -15,6 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import static org.labs.io.ParamsReader.PROGRAMMERS_COUNT;
 import static org.labs.io.ParamsReader.WAITERS_COUNT;
 
+@Slf4j
 public class Simulation {
     private final Map<String, Integer> params;
     private final QueueService queueService;
@@ -30,7 +32,7 @@ public class Simulation {
     }
 
     public void run(ExecutorService waiters, ExecutorService programmers) {
-        System.out.println("Начали симуляцию");
+        log.info("Начали симуляцию");
         foodService.initSoups(params.get(PROGRAMMERS_COUNT));
         fillForks(params.get(PROGRAMMERS_COUNT));
         fillProgrammers(params.get(PROGRAMMERS_COUNT), programmers);
@@ -61,3 +63,5 @@ public class Simulation {
         }
     }
 }
+
+// 1 3 5 4 2 1 5 3 4 2

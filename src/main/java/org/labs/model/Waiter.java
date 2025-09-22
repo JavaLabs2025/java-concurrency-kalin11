@@ -2,10 +2,12 @@ package org.labs.model;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.labs.service.FoodService;
 import org.labs.service.QueueService;
 
 @RequiredArgsConstructor
+@Slf4j
 public class Waiter implements Runnable {
     private final int id;
     private final QueueService queueService;
@@ -15,13 +17,15 @@ public class Waiter implements Runnable {
     @SneakyThrows
     public void run() {
         while (foodService.getEatCount().get() > 0) {
-            System.out.println("Официант " + id + ", его очередь = ");
-            queueService.print();
+            log.info("Официант {}, его очередь = {}", id, queueService.print());
             var programmerId = queueService.poll();
-            System.out.println("Официант " + id + " взял программиста с id = " + programmerId);
+            log.info("Официант {} взял программиста с id = {}", id, programmerId);
             if (programmerId != null) {
-                foodService.addSoupToProgrammer(programmerId);
-                System.out.println("Официант " + id + " добавил программисту " + programmerId + " суп");
+                if (foodService.addSoupToProgrammer(programmerId)) {
+                    log.info("Официант {} добавил программисту {} суп", id, programmerId);
+                } else {
+                    break;
+                }
             }
             Thread.sleep(100);
         }
