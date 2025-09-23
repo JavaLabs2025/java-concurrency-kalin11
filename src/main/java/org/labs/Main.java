@@ -8,9 +8,9 @@ import org.labs.service.QueueService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import static org.labs.io.ParamsReader.EAT_COUNT;
-import static org.labs.io.ParamsReader.PROGRAMMERS_COUNT;
-import static org.labs.io.ParamsReader.WAITERS_COUNT;
+import static org.labs.configuration.ConfigurationParam.EAT_COUNT;
+import static org.labs.configuration.ConfigurationParam.PROGRAMMERS_COUNT;
+import static org.labs.configuration.ConfigurationParam.WAITERS_COUNT;
 
 @Slf4j
 public class Main {
